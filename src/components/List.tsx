@@ -51,7 +51,7 @@ const ListBox = styled.div`
   div {
     background-color: #eedaea;
     width: 400px;
-    padding: 20px 15px;
+
     position: relative;
     border-radius: 10px;
     font-size: 16px;
@@ -62,9 +62,14 @@ const ListBox = styled.div`
     margin: 20px 0;
     h3 {
       width: 100%;
+      background-color: #d7c6e6;
+      padding: 10px;
+      border-top-right-radius: 10px;
+      border-top-left-radius: 10px;
     }
     p {
       width: 100%;
+      padding: 10px;
     }
     button {
       border: none;

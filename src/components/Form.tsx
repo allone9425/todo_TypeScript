@@ -60,14 +60,13 @@ const FormBox = styled.div`
     align-items: center;
     flex-wrap: wrap;
     justify-content: center;
-
     input {
       border: none;
-      width: 330px;
+      width: 300px;
       border-radius: 5px;
       font-size: 20px;
       padding: 10px;
-      margin: 15px;
+      margin: 20px 20px 20px 0px;
       &::placeholder {
         color: #aaa;
       }
