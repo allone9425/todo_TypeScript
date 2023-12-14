@@ -6,7 +6,12 @@ import { ListType } from "../types/todoType";
 function List({ isDone }: ListType) {
   const todos = useSelector((state: RootState) => state.todos);
   const dispatch = useDispatch();
-
+  const handleDelete = (todoId: string) => {
+    const isConfirmed = window.confirm("삭제할까요?");
+    if (isConfirmed) {
+      dispatch(deleteTodo(todoId));
+    }
+  };
   return (
     <ListBox>
       <h2>{isDone === true ? "완료된 할일 " : "진행중인 할일"}</h2>
@@ -15,9 +20,9 @@ function List({ isDone }: ListType) {
         .map((todo) => (
           <div key={todo.id}>
             <h3>{todo.title}</h3>
-            <p>{todo.id}</p>
             <p>{todo.contents}</p>
-            <p>{String(todo.isDone)}</p>
+            {/* <p>{todo.id}</p>
+            <p>{String(todo.isDone)}</p> */}
             <button
               onClick={() => {
                 dispatch(switchTodo(todo.id));
@@ -27,7 +32,7 @@ function List({ isDone }: ListType) {
             </button>
             <button
               onClick={() => {
-                dispatch(deleteTodo(todo.id));
+                handleDelete(todo.id);
               }}
             >
               삭제
@@ -49,20 +54,20 @@ const ListBox = styled.div`
   }
 
   div {
-    background-color: #eedaea;
     width: 400px;
-
+    box-shadow: 2px 2px 8px #aaa;
     position: relative;
     border-radius: 10px;
-    font-size: 16px;
+    font-size: 18px;
     display: flex;
     box-sizing: border-box;
+    padding-bottom: 35px;
     flex-wrap: wrap;
     line-height: 1.5rem;
-    margin: 20px 0;
+    margin: 20px 10px;
     h3 {
       width: 100%;
-      background-color: #d7c6e6;
+      background-color: #eedaea;
       padding: 10px;
       border-top-right-radius: 10px;
       border-top-left-radius: 10px;
@@ -87,7 +92,7 @@ const ListBox = styled.div`
         right: 70px;
       }
       &:hover {
-        background-color: #fffacd;
+        background-color: #c8ceea;
       }
     }
   }

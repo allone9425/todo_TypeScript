@@ -19,6 +19,7 @@ function Form() {
     dispatch(addTodo(newTodo));
     setTitle("");
     setContents("");
+    alert("할일이 추가 되었어요!");
   };
   return (
     <FormBox>
@@ -53,7 +54,7 @@ export default Form;
 const FormBox = styled.div`
   background-color: #eedaea;
   margin: 20px 0;
-
+  box-shadow: 2px 2px 5px #aaa;
   border-radius: 10px;
   form {
     display: flex;
@@ -80,7 +81,7 @@ const FormBox = styled.div`
       border-radius: 5px;
       font-weight: bold;
       &:hover {
-        background-color: #fffacd;
+        background-color: #c8ceea;
       }
     }
   }
