@@ -9,14 +9,14 @@ const uuid = () => {
 const initialState = [
   {
     id: uuid(),
-    title: "리액트 투두 리스트 만들기",
-    contents: "리액트 투두 리스트 만들기",
+    title: "리액트 공부하기",
+    contents: "리액트 공부하기",
     isDone: false,
   },
   {
     id: uuid(),
-    title: "주말에 착용할 리본 핀 고르기",
-    contents: "주말에 착용할 리본 핀을 골라보죠!",
+    title: "타입스크립트 공부하기",
+    contents: "타입스크립트 공부하기",
     isDone: true,
   },
 ];
