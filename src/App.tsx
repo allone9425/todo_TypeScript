@@ -1,9 +1,11 @@
 import "./App.css";
-import Home from "./pages/Home";
+import Router from "./shard/Router";
+import GlobalStyle from "./style/GlobalStyle";
 function App() {
   return (
     <div>
-      <Home />
+      <GlobalStyle />
+      <Router />
     </div>
   );
 }

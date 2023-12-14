@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import styled from "styled-components";
 import { v4 } from "uuid";
 import { addTodo } from "../redux/todos";
 import { todoType } from "../types/todoType";
@@ -20,19 +21,20 @@ function Form() {
     setContents("");
   };
   return (
-    <div>
+    <FormBox>
       <form>
-        <label htmlFor="title">제목</label>
         <input
           id="title"
           value={title}
+          placeholder="제목"
           onChange={(e) => {
             setTitle(e.target.value);
           }}
         />
-        <label htmlFor="contents">내용</label>
+
         <input
           id="contents"
+          placeholder="내용"
           value={contents}
           onChange={(e) => {
             setContents(e.target.value);
@@ -42,8 +44,45 @@ function Form() {
           추가하기
         </button>
       </form>
-    </div>
+    </FormBox>
   );
 }
 
 export default Form;
+
+const FormBox = styled.div`
+  background-color: #eedaea;
+  margin: 20px 0;
+
+  border-radius: 10px;
+  form {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    input {
+      border: none;
+      width: 330px;
+      border-radius: 5px;
+      font-size: 20px;
+      padding: 10px;
+      margin: 15px;
+      &::placeholder {
+        color: #aaa;
+      }
+    }
+    button {
+      border: none;
+      font-size: 20px;
+      padding: 10px;
+      background-color: #d7c6e6;
+      color: #555;
+      border-radius: 5px;
+      font-weight: bold;
+      &:hover {
+        background-color: #fffacd;
+      }
+    }
+  }
+`;

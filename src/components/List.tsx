@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
+import styled from "styled-components";
 import { RootState } from "../redux/store";
 import { deleteTodo, switchTodo } from "../redux/todos";
 import { ListType } from "../types/todoType";
@@ -7,8 +8,8 @@ function List({ isDone }: ListType) {
   const dispatch = useDispatch();
 
   return (
-    <div>
-      <h2>{isDone === true ? "완료 " : "진행중"}</h2>
+    <ListBox>
+      <h2>{isDone === true ? "완료된 할일 " : "진행중인 할일"}</h2>
       {todos
         .filter((item) => item.isDone === isDone)
         .map((todo) => (
@@ -33,8 +34,56 @@ function List({ isDone }: ListType) {
             </button>
           </div>
         ))}
-    </div>
+    </ListBox>
   );
 }
 
 export default List;
+
+const ListBox = styled.div`
+  h2 {
+    background-color: #c8ceea;
+    padding: 20px;
+    font-weight: bold;
+    margin: 10px 0;
+  }
+
+  div {
+    background-color: #eedaea;
+    width: 400px;
+    padding: 20px 15px;
+    position: relative;
+    border-radius: 10px;
+    font-size: 16px;
+    display: flex;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    line-height: 1.5rem;
+    margin: 20px 0;
+    h3 {
+      width: 100%;
+    }
+    p {
+      width: 100%;
+    }
+    button {
+      border: none;
+      background-color: #d7c6e6;
+      padding: 5px 10px;
+      font-size: 16px;
+      color: #555;
+      bottom: 10px;
+      border-radius: 5px;
+      margin-top: 20px;
+      font-weight: 600;
+      position: absolute;
+      right: 10px;
+      &:first-of-type {
+        right: 70px;
+      }
+      &:hover {
+        background-color: #fffacd;
+      }
+    }
+  }
+`;
