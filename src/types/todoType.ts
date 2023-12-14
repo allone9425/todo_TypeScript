@@ -8,3 +8,8 @@ export type todoType = {
 export type ListType = {
   isDone: boolean;
 };
+
+export type AddTodoAction = {
+  type: string;
+  payload: todoType;
+};

@@ -1,12 +1,12 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { v4 } from "uuid";
-import { todoType } from "../types/todoType";
+import { AddTodoAction, todoType } from "../types/todoType";
 const uuid = () => {
   const tokens = v4().split("-");
   return tokens[2] + tokens[1] + tokens[0] + tokens[3] + tokens[4];
 };
 
-const initialState = [
+const initialState: todoType[] = [
   {
     id: uuid(),
     title: "리액트 공부하기",
@@ -25,13 +25,13 @@ const todosSlice = createSlice({
   name: "todos",
   initialState,
   reducers: {
-    addTodo: (state, action: PayloadAction<todoType>) => {
+    addTodo: (state, action: AddTodoAction) => {
       state.push(action.payload);
     },
-    deleteTodo: (state, action: PayloadAction<string>) => {
+    deleteTodo: (state, action: { type: string; payload: string }) => {
       return state.filter((todo) => todo.id !== action.payload);
     },
-    switchTodo: (state, action: PayloadAction<string>) => {
+    switchTodo: (state, action: { type: string; payload: string }) => {
       const todoToSwitch = state.find((todo) => todo.id === action.payload);
       if (todoToSwitch) {
         todoToSwitch.isDone = !todoToSwitch.isDone;
