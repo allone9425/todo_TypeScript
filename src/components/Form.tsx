@@ -1,14 +1,18 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { v4 } from "uuid";
-import { addTodo } from "../redux/todos";
+import { createTodo, useInvalidateTodos } from "../api/api";
 import { todoType } from "../types/todoType";
+
 function Form() {
+  //제목 저장하는 State
   const [title, setTitle] = useState("");
+  //내용 저장하는 State
   const [contents, setContents] = useState("");
-  const dispatch = useDispatch();
-  const onSubmitHandler = (e: React.FormEvent) => {
+  const invalidateTodos = useInvalidateTodos();
+
+  const onSubmitHandler = async (e: React.FormEvent) => {
+    //새로고침 방지
     e.preventDefault();
     const newTodo: todoType = {
       id: v4(),
@@ -16,11 +20,14 @@ function Form() {
       contents,
       isDone: false,
     };
-    dispatch(addTodo(newTodo));
+    //새로운 할일 추가
+    await createTodo(newTodo);
     setTitle("");
     setContents("");
+    invalidateTodos();
     alert("할일이 추가 되었어요!");
   };
+
   return (
     <FormBox>
       <form>

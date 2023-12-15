@@ -1,31 +1,67 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { RootState } from "../redux/store";
-import { deleteTodo, switchTodo } from "../redux/todos";
-import { ListType } from "../types/todoType";
+import {
+  deleteTodo,
+  fetchTodos,
+  toggleTodo,
+  useInvalidateTodos,
+} from "../api/api";
+import { ListType, todoType } from "../types/todoType";
+
 function List({ isDone }: ListType) {
-  const todos = useSelector((state: RootState) => state.todos);
-  const dispatch = useDispatch();
-  const handleDelete = (todoId: string) => {
+  // 할 일 목록을 저장하는 State
+  const [todos, setTodos] = useState<todoType[]>([]);
+  const invalidateTodos = useInvalidateTodos();
+
+  useEffect(() => {
+    const fetchAndSetTodos = async () => {
+      // 할 일 목록을 가져옴
+      const fetchedTodos = await fetchTodos();
+      // 가져온 할 일 목록을 설정
+      setTodos(fetchedTodos);
+    };
+    // 컴포넌트가 마운트될 때 할 일 목록을 가져오도록 호출
+    fetchAndSetTodos();
+  }, [invalidateTodos]);
+
+  const handleDelete = async (todoId: string) => {
     const isConfirmed = window.confirm("삭제할까요?");
     if (isConfirmed) {
-      dispatch(deleteTodo(todoId));
+      //할일 삭제
+      await deleteTodo(todoId);
+      //삭제한 할 일을 제외한 나머지 할 일 목록 업데이트
+      setTodos(todos.filter((todo) => todo.id !== todoId));
+      //할일목록 무효화
+      invalidateTodos();
     }
   };
+
+  const handleToggle = async (todoId: string) => {
+    // 할 일의 완료 상태 토글
+    await toggleTodo(todoId);
+    // 완료 상태가 변경된 할 일을 업데이트
+    setTodos(
+      todos.map((todo) =>
+        todo.id === todoId ? { ...todo, isDone: !todo.isDone } : todo
+      )
+    );
+    // 할 일 목록을 무효화
+    invalidateTodos();
+  };
+
   return (
     <ListBox>
       <h2>{isDone === true ? "완료된 할일 " : "진행중인 할일"}</h2>
+
       {todos
         .filter((item) => item.isDone === isDone)
         .map((todo) => (
           <div key={todo.id}>
             <h3>{todo.title}</h3>
             <p>{todo.contents}</p>
-            {/* <p>{todo.id}</p>
-            <p>{String(todo.isDone)}</p> */}
             <button
               onClick={() => {
-                dispatch(switchTodo(todo.id));
+                handleToggle(todo.id);
               }}
             >
               {isDone === false ? "완료" : "취소"}
