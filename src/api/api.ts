@@ -1,5 +1,5 @@
+import { useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import { useQueryClient } from "react-query";
 import { todoType } from "../types/todoType";
 
 const base_url = "http://localhost:4000/todos";
@@ -36,6 +36,6 @@ export const toggleTodo = async (id: string) => {
 export const useInvalidateTodos = () => {
   const queryClient = useQueryClient();
   return () => {
-    queryClient.invalidateQueries("todos");
+    queryClient.invalidateQueries(["todos"]); // Pass the query key as an array
   };
 };

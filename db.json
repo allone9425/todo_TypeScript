@@ -2,8 +2,8 @@
   "todos": [
     {
       "id": "2",
-      "title": "타입스크립트 공부하기1",
-      "contents": "타입스크립트 공부하기1",
+      "title": "타입스크립트 공부하기",
+      "contents": "타입스크립트 공부하기",
       "isDone": false
     },
     {
@@ -11,6 +11,12 @@
       "title": "리액트 공부하기",
       "contents": "리액트 공부하기!",
       "isDone": true
+    },
+    {
+      "id": "414d89fe-e55a-4ca8-8594-c1ba60560c8b",
+      "title": "리액트 쿼리",
+      "contents": "어려운 리액트 쿼리..",
+      "isDone": false
     }
   ]
 }

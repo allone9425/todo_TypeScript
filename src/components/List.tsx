@@ -1,61 +1,43 @@
-import { useEffect, useState } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import styled from "styled-components";
-import {
-  deleteTodo,
-  fetchTodos,
-  toggleTodo,
-  useInvalidateTodos,
-} from "../api/api";
+import { deleteTodo, toggleTodo, useInvalidateTodos } from "../api/api";
 import { ListType, todoType } from "../types/todoType";
 
-function List({ isDone }: ListType) {
-  // 할 일 목록을 저장하는 State
-  const [todos, setTodos] = useState<todoType[]>([]);
-  const invalidateTodos = useInvalidateTodos();
+const fetchTodos = async () => {
+  const response = await fetch("http://localhost:4000/todos");
+  if (!response.ok) {
+    throw new Error("네트워크 응답이 올바르지 않습니다");
+  }
+  return response.json();
+};
 
-  useEffect(() => {
-    const fetchAndSetTodos = async () => {
-      // 할 일 목록을 가져옴
-      const fetchedTodos = await fetchTodos();
-      // 가져온 할 일 목록을 설정
-      setTodos(fetchedTodos);
-    };
-    // 컴포넌트가 마운트될 때 할 일 목록을 가져오도록 호출
-    fetchAndSetTodos();
-  }, [invalidateTodos]);
+function List({ isDone }: ListType) {
+  const invalidateTodos = useInvalidateTodos();
+  const queryClient = useQueryClient();
+
+  const { data: todos } = useQuery(["todos"], fetchTodos); // Pass the query key as an array
 
   const handleDelete = async (todoId: string) => {
     const isConfirmed = window.confirm("삭제할까요?");
     if (isConfirmed) {
-      //할일 삭제
       await deleteTodo(todoId);
-      //삭제한 할 일을 제외한 나머지 할 일 목록 업데이트
-      setTodos(todos.filter((todo) => todo.id !== todoId));
-      //할일목록 무효화
       invalidateTodos();
+      queryClient.invalidateQueries(["todos"]); // Pass the query key as an array
     }
   };
 
   const handleToggle = async (todoId: string) => {
-    // 할 일의 완료 상태 토글
     await toggleTodo(todoId);
-    // 완료 상태가 변경된 할 일을 업데이트
-    setTodos(
-      todos.map((todo) =>
-        todo.id === todoId ? { ...todo, isDone: !todo.isDone } : todo
-      )
-    );
-    // 할 일 목록을 무효화
     invalidateTodos();
+    queryClient.invalidateQueries(["todos"]); // Pass the query key as an array
   };
-
   return (
     <ListBox>
       <h2>{isDone === true ? "완료된 할일 " : "진행중인 할일"}</h2>
 
       {todos
-        .filter((item) => item.isDone === isDone)
-        .map((todo) => (
+        ?.filter((item: todoType) => item.isDone === isDone)
+        .map((todo: todoType) => (
           <div key={todo.id}>
             <h3>{todo.title}</h3>
             <p>{todo.contents}</p>
