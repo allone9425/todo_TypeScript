@@ -4,13 +4,13 @@
       "id": "2",
       "title": "타입스크립트 공부하기",
       "contents": "타입스크립트 공부하기",
-      "isDone": false
+      "isDone": true
     },
     {
       "id": "a88ed8fa-89a6-4d79-8a36-275fb1a77a14",
       "title": "리액트 공부하기",
       "contents": "리액트 공부하기!",
-      "isDone": true
+      "isDone": false
     },
     {
       "id": "414d89fe-e55a-4ca8-8594-c1ba60560c8b",

@@ -10,13 +10,16 @@ const fetchTodos = async () => {
   }
   return response.json();
 };
-
+// 할일 목록을 렌더링하는 함수형 컴포넌트
 function List({ isDone }: ListType) {
+  // 할일을 무효화하는 커스텀 훅
   const invalidateTodos = useInvalidateTodos();
+  // 쿼리 관리를 위한 쿼리 클라이언트 훅
   const queryClient = useQueryClient();
-
+  // react query 훅을 사용하여 할일을 가져옴
   const { data: todos } = useQuery(["todos"], fetchTodos); // Pass the query key as an array
 
+  // 할일 삭제하는 함수
   const handleDelete = async (todoId: string) => {
     const isConfirmed = window.confirm("삭제할까요?");
     if (isConfirmed) {
@@ -25,7 +28,7 @@ function List({ isDone }: ListType) {
       queryClient.invalidateQueries(["todos"]); // Pass the query key as an array
     }
   };
-
+  // 할일 토글(완료 또는 취소)하는 함수
   const handleToggle = async (todoId: string) => {
     await toggleTodo(todoId);
     invalidateTodos();
