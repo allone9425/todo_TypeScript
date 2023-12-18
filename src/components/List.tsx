@@ -17,7 +17,7 @@ function List({ isDone }: ListType) {
   // 쿼리 관리를 위한 쿼리 클라이언트 훅
   const queryClient = useQueryClient();
   // react query 훅을 사용하여 할일을 가져옴
-  const { data: todos } = useQuery(["todos"], fetchTodos); // Pass the query key as an array
+  const { data: todos } = useQuery(["todos"], fetchTodos); 
 
   // 할일 삭제하는 함수
   const handleDelete = async (todoId: string) => {
@@ -25,14 +25,14 @@ function List({ isDone }: ListType) {
     if (isConfirmed) {
       await deleteTodo(todoId);
       invalidateTodos();
-      queryClient.invalidateQueries(["todos"]); // Pass the query key as an array
+      queryClient.invalidateQueries(["todos"]); 
     }
   };
   // 할일 토글(완료 또는 취소)하는 함수
   const handleToggle = async (todoId: string) => {
     await toggleTodo(todoId);
     invalidateTodos();
-    queryClient.invalidateQueries(["todos"]); // Pass the query key as an array
+    queryClient.invalidateQueries(["todos"]); 
   };
   return (
     <ListBox>
