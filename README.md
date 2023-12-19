@@ -15,7 +15,7 @@
 - TypeScript용으로 변환함
 - Json Server를 사용함(Lv5기준)
 
-## 사용한 기술 : react, redux, uuid, styled-components, redux toolkit, redux query(4버전), json-Server
+## 사용한 기술 : react, redux, uuid, styled-components, redux toolkit, react query(4버전), json-Server
 
 ## 화면 구성 :
 
